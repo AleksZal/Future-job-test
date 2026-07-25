@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from './ui/Card';
 import { Input } from './ui/Input';
+import { PhoneInput } from './ui/PhoneInput';
 import { Button } from './ui/Button';
 import '../styles/login.css';
 
@@ -21,7 +22,7 @@ export default function Login() {
         {step === 1 ? (
           <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
             <Input label="Full Name" placeholder="Ivan Ivanov" />
-            <Input label="Phone Number" placeholder="+380" />
+            <PhoneInput label="Phone Number" />
             <Input label="Date of Birth" type="date" />
             <Input label="City" placeholder="Kyiv" />
             <Input label="School" placeholder="Lyceum #1" />
