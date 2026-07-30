@@ -1,5 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .routers import applicants
+from .database import engine
+from . import models
+
+# Create all tables (in a real app, use alembic)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Applicant Test API")
 
@@ -12,8 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(applicants.router)
+
 @app.get("/api")
 def read_root():
     return {"message": "API is working."}
-
-# Additional routes will be implemented here
