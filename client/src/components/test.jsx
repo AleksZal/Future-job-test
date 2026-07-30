@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from './ui/Card';
 import { Button } from './ui/Button';
@@ -14,15 +14,39 @@ const mockAnswers = ["Точно А", "Ближче до А", "Не знаю", "
 export default function Test() {
   const navigate = useNavigate();
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [focusedIdx, setFocusedIdx] = useState(-1);
   const total = 20;
 
   const handleAnswer = (idx) => {
     if (currentIdx < total - 1) {
       setCurrentIdx(currentIdx + 1);
+      setFocusedIdx(-1);
     } else {
       navigate('/results');
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Numbers 1-5
+      if (e.key >= '1' && e.key <= '5') {
+        const idx = parseInt(e.key) - 1;
+        handleAnswer(idx);
+      }
+      
+      // Arrow keys for visual focus
+      if (e.key === 'ArrowRight') {
+        setFocusedIdx(prev => Math.min(prev + 1, 4));
+      } else if (e.key === 'ArrowLeft') {
+        setFocusedIdx(prev => Math.max(prev - 1, 0));
+      } else if (e.key === 'Enter' && focusedIdx !== -1) {
+        handleAnswer(focusedIdx);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIdx, focusedIdx]);
 
   const progress = ((currentIdx) / total) * 100;
 
@@ -45,9 +69,11 @@ export default function Test() {
           {mockAnswers.map((ans, idx) => (
             <button 
               key={idx} 
-              className="answer-btn"
+              className={`answer-btn ${focusedIdx === idx ? 'selected' : ''}`}
               onClick={() => handleAnswer(idx)}
+              onMouseEnter={() => setFocusedIdx(idx)}
             >
+              <div style={{ fontSize: '0.75rem', opacity: 0.5, marginBottom: '4px' }}>[{idx + 1}]</div>
               {ans}
             </button>
           ))}
