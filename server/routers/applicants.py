@@ -25,3 +25,16 @@ def register_applicant(applicant: schemas.ApplicantCreate, db: Session = Depends
     db.commit()
     db.refresh(new_applicant)
     return new_applicant
+
+@router.patch("/non-graduate/test-results/{applicant_id}")
+def update_non_graduate_scores(applicant_id: int, scores: schemas.NonGraduateScoreUpdate, db: Session = Depends(get_db)):
+    applicant = db.query(models.Applicant).filter(models.Applicant.id == applicant_id).first()
+    if applicant:
+        applicant.activity_score = scores.activity_score
+        applicant.social_score = scores.social_score
+        applicant.emotional_stability_score = scores.emotional_stability_score
+        applicant.structure_score = scores.structure_score
+        applicant.leadership_score = scores.leadership_score
+        applicant.has_completed_test = True
+        db.commit()
+    return {"success": True}
