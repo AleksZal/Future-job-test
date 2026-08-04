@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Card } from './ui/Card';
 import '../styles/results.css';
 
@@ -11,6 +12,15 @@ const mockJobs = [
 
 export default function Results() {
   const winner = mockJobs[0];
+  const [animatedScores, setAnimatedScores] = useState(mockJobs.map(() => 0));
+
+  useEffect(() => {
+    // Trigger animation after mount
+    const timer = setTimeout(() => {
+      setAnimatedScores(mockJobs.map(job => job.score));
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="results-container">
@@ -31,7 +41,13 @@ export default function Results() {
             <div key={idx} className="job-item">
               <div className="job-name">{job.name}</div>
               <div className="job-bar-container">
-                <div className="job-bar" style={{ width: `${job.score}%` }}></div>
+                <div 
+                  className="job-bar" 
+                  style={{ 
+                    width: `${animatedScores[idx]}%`,
+                    transition: 'width 1s cubic-bezier(0.4, 0, 0.2, 1)' 
+                  }}
+                ></div>
               </div>
               <div className="job-score">{job.score}%</div>
             </div>
