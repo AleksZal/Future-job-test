@@ -18,3 +18,14 @@ def get_top_job(scores: dict[str, float]) -> str:
     if not scores:
         return ""
     return max(scores.items(), key=lambda x: x[1])[0]
+
+JOB_WEIGHTS = {
+    "Backend": [1, -2, 1, 3, 0],
+    "Frontend": [2, 1, 0, -1, 0],
+    "QA": [-1, 0, 1, 4, -1],
+    "DevOps": [1, -1, 3, 2, 1],
+    "Data-Science": [1, -2, 2, 1, -1],
+    "Data-Engineering": [0, -1, 2, 3, 0],
+    "Business-Analysis": [0, 3, 0, -1, 2],
+    "Project-Management": [1, 3, 2, 0, 3]
+}
