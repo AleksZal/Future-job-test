@@ -4,6 +4,7 @@ import { Card } from './ui/Card';
 import { Input } from './ui/Input';
 import { PhoneInput } from './ui/PhoneInput';
 import { Button } from './ui/Button';
+import { API_BASE } from '../config';
 import '../styles/login.css';
 
 export default function Login() {
@@ -33,11 +34,34 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleProfileSubmit = (e) => {
+  const handleProfileSubmit = async (e) => {
     e.preventDefault();
     if (validateProfile()) {
-      localStorage.setItem('studyingStatus', formData.status);
-      setStep(2);
+      try {
+        const res = await fetch(`${API_BASE}/api/applicant/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            applicantFullName: formData.fullName,
+            applicantPhoneNumber: formData.phone,
+            applicantDateOfBirth: formData.dob,
+            applicantCity: formData.city,
+            applicantSchool: formData.school,
+            applicantStudyingStatus: formData.status
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('studyingStatus', formData.status);
+          if (data.applicantId) localStorage.setItem('applicantId', data.applicantId);
+          setStep(2); // Proceed to Telegram code (or skip to test if verification is disabled)
+        } else {
+          setErrors({ form: data.reason || 'Registration failed' });
+        }
+      } catch (err) {
+        console.error(err);
+        setErrors({ form: 'Network error. Please try again.' });
+      }
     }
   };
 
