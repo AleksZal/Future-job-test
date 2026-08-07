@@ -53,3 +53,21 @@ def update_graduate_scores(applicant_id: int, scores: schemas.GraduateScoreUpdat
         applicant.has_completed_test = True
         db.commit()
     return {"success": True}
+
+@router.get("/test-results/{applicant_id}", response_model=schemas.TestResultsResponse)
+def get_test_results(applicant_id: int, db: Session = Depends(get_db)):
+    applicant = db.query(models.Applicant).filter(models.Applicant.id == applicant_id).first()
+    if not applicant or not applicant.has_completed_test:
+        return {"success": False, "score": {
+            "activityScore": 0, "socialScore": 0,
+            "emotionalStabilityScore": 0, "structureScore": 0, "leadershipScore": 0
+        }}
+    
+    score = schemas.JobScore(
+        activityScore=float(applicant.activity_score or 0),
+        socialScore=float(applicant.social_score or 0),
+        emotionalStabilityScore=float(applicant.emotional_stability_score or 0),
+        structureScore=float(applicant.structure_score or 0),
+        leadershipScore=float(applicant.leadership_score or 0)
+    )
+    return schemas.TestResultsResponse(success=True, score=score)
