@@ -20,12 +20,35 @@ export default function Test() {
   const total = questions.length;
   const currentQ = questions[currentIdx];
 
-  const proceed = () => {
+  const proceed = async () => {
     if (currentIdx < total - 1) {
       setCurrentIdx(currentIdx + 1);
       setFocusedIdx(-1);
       setSubjectInput('');
     } else {
+      const applicantId = localStorage.getItem('applicantId');
+      if (applicantId) {
+        const endpoint = isGraduate ? `/api/applicant/graduate/test-results/${applicantId}` : `/api/applicant/non-graduate/test-results/${applicantId}`;
+        try {
+          // Dynamic import for config to avoid cyclic dependencies if any, though regular import is fine.
+          const { API_BASE } = await import('../config');
+          await fetch(`${API_BASE}${endpoint}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              activityScore: scores.activity,
+              socialScore: scores.social,
+              emotionalStabilityScore: scores.emotionalStability,
+              structureScore: scores.structure,
+              leadershipScore: scores.leadership,
+              mathScore: scores.math || 0,
+              physicsScore: scores.physics || 0
+            })
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
       localStorage.setItem('testScores', JSON.stringify(scores));
       navigate('/results');
     }
