@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
@@ -29,29 +29,33 @@ def register_applicant(applicant: schemas.ApplicantCreate, db: Session = Depends
 @router.patch("/non-graduate/test-results/{applicant_id}")
 def update_non_graduate_scores(applicant_id: int, scores: schemas.NonGraduateScoreUpdate, db: Session = Depends(get_db)):
     applicant = db.query(models.Applicant).filter(models.Applicant.id == applicant_id).first()
-    if applicant:
-        applicant.activity_score = scores.activity_score
-        applicant.social_score = scores.social_score
-        applicant.emotional_stability_score = scores.emotional_stability_score
-        applicant.structure_score = scores.structure_score
-        applicant.leadership_score = scores.leadership_score
-        applicant.has_completed_test = True
-        db.commit()
+    if not applicant:
+        raise HTTPException(status_code=404, detail="Applicant not found")
+    
+    applicant.activity_score = scores.activity_score
+    applicant.social_score = scores.social_score
+    applicant.emotional_stability_score = scores.emotional_stability_score
+    applicant.structure_score = scores.structure_score
+    applicant.leadership_score = scores.leadership_score
+    applicant.has_completed_test = True
+    db.commit()
     return {"success": True}
 
 @router.patch("/graduate/test-results/{applicant_id}")
 def update_graduate_scores(applicant_id: int, scores: schemas.GraduateScoreUpdate, db: Session = Depends(get_db)):
     applicant = db.query(models.Applicant).filter(models.Applicant.id == applicant_id).first()
-    if applicant:
-        applicant.activity_score = scores.activity_score
-        applicant.social_score = scores.social_score
-        applicant.emotional_stability_score = scores.emotional_stability_score
-        applicant.structure_score = scores.structure_score
-        applicant.leadership_score = scores.leadership_score
-        applicant.math_score = scores.math_score
-        applicant.physics_score = scores.physics_score
-        applicant.has_completed_test = True
-        db.commit()
+    if not applicant:
+        raise HTTPException(status_code=404, detail="Applicant not found")
+        
+    applicant.activity_score = scores.activity_score
+    applicant.social_score = scores.social_score
+    applicant.emotional_stability_score = scores.emotional_stability_score
+    applicant.structure_score = scores.structure_score
+    applicant.leadership_score = scores.leadership_score
+    applicant.math_score = scores.math_score
+    applicant.physics_score = scores.physics_score
+    applicant.has_completed_test = True
+    db.commit()
     return {"success": True}
 
 @router.get("/test-results/{applicant_id}", response_model=schemas.TestResultsResponse)
