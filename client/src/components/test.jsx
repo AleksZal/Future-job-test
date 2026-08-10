@@ -14,6 +14,7 @@ export default function Test() {
     activity: 0, social: 0, emotionalStability: 0, structure: 0, leadership: 0, math: 0, physics: 0
   });
   const [subjectInput, setSubjectInput] = useState('');
+  const [errorMsg, setErrorMsg] = useState(null);
   
   const isGraduate = localStorage.getItem('studyingStatus') === 'Graduated';
   const questions = isGraduate ? questionsAndAnswers.graduate : questionsAndAnswers.nonGraduate;
@@ -25,14 +26,14 @@ export default function Test() {
       setCurrentIdx(currentIdx + 1);
       setFocusedIdx(-1);
       setSubjectInput('');
+      setErrorMsg(null);
     } else {
       const applicantId = localStorage.getItem('applicantId');
       if (applicantId) {
         const endpoint = isGraduate ? `/api/applicant/graduate/test-results/${applicantId}` : `/api/applicant/non-graduate/test-results/${applicantId}`;
         try {
-          // Dynamic import for config to avoid cyclic dependencies if any, though regular import is fine.
           const { API_BASE } = await import('../config');
-          await fetch(`${API_BASE}${endpoint}`, {
+          const res = await fetch(`${API_BASE}${endpoint}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -45,8 +46,12 @@ export default function Test() {
               physicsScore: scores.physics || 0
             })
           });
+          if (!res.ok) throw new Error('Failed to submit results');
         } catch (e) {
           console.error(e);
+          setErrorMsg('Failed to save your progress, but you can continue to results.');
+          setTimeout(() => navigate('/results'), 2000);
+          return; // Early return to show error message briefly
         }
       }
       localStorage.setItem('testScores', JSON.stringify(scores));
@@ -90,6 +95,7 @@ export default function Test() {
   return (
     <div className="test-container">
       <Card className="test-card">
+        {errorMsg && <div style={{ padding: '1rem', marginBottom: '1rem', backgroundColor: 'var(--error)', color: 'white', borderRadius: 'var(--radius-sm)' }}>{errorMsg}</div>}
         <div className="progress-bar-container">
           <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         </div>

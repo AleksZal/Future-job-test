@@ -18,6 +18,7 @@ const jobDescriptions = {
 export default function Results() {
   const [jobs, setJobs] = useState([]);
   const [animatedScores, setAnimatedScores] = useState([]);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -27,12 +28,16 @@ export default function Results() {
       if (applicantId) {
         try {
           const res = await fetch(`${API_BASE}/api/applicant/test-results/${applicantId}`);
+          if (!res.ok) throw new Error('Network response was not ok');
           const data = await res.json();
           if (data.success && data.score) {
             scoreData = data.score;
+          } else {
+            setErrorMsg('Could not fetch latest results from server. Showing local results.');
           }
         } catch (e) {
           console.error(e);
+          setErrorMsg('Could not connect to server. Showing local results.');
         }
       }
 
@@ -79,6 +84,7 @@ export default function Results() {
   return (
     <div className="results-container">
       <Card className="results-card">
+        {errorMsg && <div style={{ padding: '1rem', marginBottom: '1rem', backgroundColor: 'var(--warning)', color: 'black', borderRadius: 'var(--radius-sm)' }}>{errorMsg}</div>}
         <div className="results-header">
           <h2>Your Ideal Career Path</h2>
           <p>Based on your psychometric profile, here are our recommendations.</p>
