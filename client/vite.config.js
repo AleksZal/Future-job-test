@@ -11,5 +11,10 @@ export default defineConfig({
   },
   preview: {
     allowedHosts: ['frontend-production-5cfa.up.railway.app']
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test/setup.js'
   }
 })
