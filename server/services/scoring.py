@@ -11,7 +11,22 @@ def calculate_job_scores(traits: list[float], weight_matrix: dict[str, list[floa
         score = sum(t * w for t, w in zip(traits, weights))
         scores[job] = score
     
-    return scores
+    return normalize_scores(scores)
+
+def normalize_scores(scores: dict[str, float]) -> dict[str, float]:
+    if not scores:
+        return {}
+    
+    min_score = min(scores.values())
+    max_score = max(scores.values())
+    
+    if min_score == max_score:
+        return {job: 1.0 for job in scores}
+    
+    return {
+        job: (score - min_score) / (max_score - min_score)
+        for job, score in scores.items()
+    }
 
 def get_top_job(scores: dict[str, float]) -> str:
     """Returns the job with the highest score."""
