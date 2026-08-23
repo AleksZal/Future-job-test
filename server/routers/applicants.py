@@ -11,7 +11,12 @@ def get_applicant_or_404(applicant_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Applicant not found")
     return applicant
 
-@router.post("/register", response_model=schemas.ApplicantResponse)
+@router.post(
+    "/register", 
+    response_model=schemas.ApplicantResponse,
+    summary="Register a new applicant",
+    response_description="Returns the created or existing applicant data"
+)
 def register_applicant(applicant: schemas.ApplicantCreate, db: Session = Depends(get_db)):
     db_applicant = db.query(models.Applicant).filter(models.Applicant.phone_number == applicant.phone_number).first()
     if db_applicant:
@@ -32,7 +37,11 @@ def register_applicant(applicant: schemas.ApplicantCreate, db: Session = Depends
     db.refresh(new_applicant)
     return new_applicant
 
-@router.patch("/non-graduate/test-results/{applicant_id}")
+@router.patch(
+    "/non-graduate/test-results/{applicant_id}",
+    summary="Update test results for non-graduates",
+    response_description="Returns success status"
+)
 def update_non_graduate_scores(scores: schemas.NonGraduateScoreUpdate, applicant: models.Applicant = Depends(get_applicant_or_404), db: Session = Depends(get_db)):
     applicant.activity_score = scores.activity_score
     applicant.social_score = scores.social_score
@@ -43,7 +52,11 @@ def update_non_graduate_scores(scores: schemas.NonGraduateScoreUpdate, applicant
     db.commit()
     return {"success": True}
 
-@router.patch("/graduate/test-results/{applicant_id}")
+@router.patch(
+    "/graduate/test-results/{applicant_id}",
+    summary="Update test results for graduates (includes subjects)",
+    response_description="Returns success status"
+)
 def update_graduate_scores(scores: schemas.GraduateScoreUpdate, applicant: models.Applicant = Depends(get_applicant_or_404), db: Session = Depends(get_db)):
     applicant.activity_score = scores.activity_score
     applicant.social_score = scores.social_score
@@ -56,7 +69,12 @@ def update_graduate_scores(scores: schemas.GraduateScoreUpdate, applicant: model
     db.commit()
     return {"success": True}
 
-@router.get("/test-results/{applicant_id}", response_model=schemas.TestResultsResponse)
+@router.get(
+    "/test-results/{applicant_id}", 
+    response_model=schemas.TestResultsResponse,
+    summary="Get calculated job test results",
+    response_description="Returns traits for score calculation"
+)
 def get_test_results(applicant: models.Applicant = Depends(get_applicant_or_404)):
     if not applicant.has_completed_test:
         return {"success": False, "score": {
