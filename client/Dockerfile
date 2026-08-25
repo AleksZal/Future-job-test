@@ -14,14 +14,16 @@ ENV VITE_API_URL=$VITE_API_URL
 
 RUN npm run build
 
-# Stage 2: Serve the app with Nginx
-FROM nginx:alpine
+# Stage 2: Serve the app with Node.js 'serve'
+FROM node:20-alpine
 
-# Copy the custom nginx configuration for React Router
-COPY nginx.conf /etc/nginx/templates/default.conf.template
+WORKDIR /app
 
-# Copy the built assets from the build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-RUN chmod -R 755 /usr/share/nginx/html
+# Install 'serve' to serve static files
+RUN npm install -g serve
 
-CMD ["nginx", "-g", "daemon off;"]
+# Copy built assets from the build stage
+COPY --from=build /app/dist /app/dist
+
+# 'serve' automatically picks up the $PORT environment variable injected by Railway
+CMD ["serve", "-s", "dist"]
