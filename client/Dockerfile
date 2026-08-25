@@ -25,5 +25,5 @@ RUN npm install -g serve
 # Copy built assets from the build stage
 COPY --from=build /app/dist /app/dist
 
-# 'serve' automatically picks up the $PORT environment variable injected by Railway
-CMD ["serve", "-s", "dist"]
+# 'serve' must explicitly bind to the Railway injected port
+CMD ["sh", "-c", "serve -s dist -l ${PORT:-3000}"]
