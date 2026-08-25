@@ -7,9 +7,9 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
-    allowedHosts: true
+    allowedHosts: ['frontend-production-5cfa.up.railway.app']
   },
   preview: {
-    allowedHosts: true
+    allowedHosts: ['frontend-production-5cfa.up.railway.app']
   }
 })
