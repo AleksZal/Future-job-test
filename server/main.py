@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -48,3 +48,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.get("/api")
 def read_root():
     return {"message": "API is working."}
+
+@app.get("/", include_in_schema=False)
+def root_redirect():
+    return RedirectResponse(url="/docs")
