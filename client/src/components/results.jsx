@@ -5,14 +5,25 @@ import { API_BASE } from '../config';
 import '../styles/results.css';
 
 const jobDescriptions = {
-  Frontend: 'Creates the user interface and interactions.',
-  Backend: 'Builds server logic and databases.',
-  QA: 'Ensures software quality.',
-  DevOps: 'Automates deployment and operations.',
-  'Data-Science': 'Extracts insights from data.',
-  'Data-Engineering': 'Builds data pipelines.',
-  'Business-Analysis': 'Translates needs into tech solutions.',
-  'Project-Management': 'Leads teams to deliver projects.'
+  Frontend: 'Створює користувацькі інтерфейси та взаємодію з ними.',
+  Backend: 'Розробляє серверну логіку, бази даних та API.',
+  QA: 'Ви уважні до деталей і методичні. QA — це роль, де ваша точність стає ключовою перевагою команди.',
+  DevOps: 'Автоматизує процеси розгортання та керує інфраструктурою.',
+  'Data-Science': 'Аналізує великі дані та будує модели штучного інтелекту.',
+  'Data-Engineering': 'Створює надійні конвеєри обробки великих даних.',
+  'Business-Analysis': 'Перетворює бізнес-потреби на технічні вимоги.',
+  'Project-Management': 'Керує командами для досягнення цілей проекту.'
+};
+
+const kpiMapping = {
+  'QA': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
+  'Frontend': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
+  'Backend': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
+  'DevOps': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування"] },
+  'Data-Science': { specialty: "124: Системний аналіз", depts: ["ММСА: Кафедра математичних методів системного аналізу", "САТР: Кафедра системного аналізу та теорії рішень"] },
+  'Data-Engineering': { specialty: "124: Системний аналіз", depts: ["ММСА: Кафедра математичних методів системного аналізу"] },
+  'Business-Analysis': { specialty: "124: Системний аналіз", depts: ["САТР: Кафедра системного аналізу та теорії рішень"] },
+  'Project-Management': { specialty: "124: Системний аналіз", depts: ["САТР: Кафедра системного аналізу та теорії рішень"] }
 };
 
 export default function Results() {
@@ -41,7 +52,6 @@ export default function Results() {
         }
       }
 
-      // Compute job scores
       let maxScore = -Infinity;
       let minScore = Infinity;
       const computed = Object.keys(weights).map(jobName => {
@@ -59,7 +69,6 @@ export default function Results() {
         return { name: jobName, rawScore: score, desc: jobDescriptions[jobName] };
       });
 
-      // Normalize to 0-100
       const range = maxScore - minScore || 1;
       const normalized = computed.map(j => ({
         ...j,
@@ -68,7 +77,6 @@ export default function Results() {
 
       setJobs(normalized);
       
-      // Trigger animation
       setTimeout(() => {
         setAnimatedScores(normalized.map(job => job.score));
       }, 100);
@@ -80,26 +88,50 @@ export default function Results() {
   if (jobs.length === 0) return <div>Loading...</div>;
 
   const winner = jobs[0];
+  const winnerName = winner.name.replace('-', ' ');
+  const kpiInfo = kpiMapping[winner.name] || kpiMapping['QA'];
 
   return (
     <div className="results-container">
       <Card className="results-card">
         {errorMsg && <div style={{ padding: '1rem', marginBottom: '1rem', backgroundColor: 'var(--warning)', color: 'black', borderRadius: 'var(--radius-sm)' }}>{errorMsg}</div>}
-        <div className="results-header">
-          <h2>Your Ideal Career Path</h2>
-          <p>Based on your psychometric profile, here are our recommendations.</p>
-        </div>
-
+        
         <div className="winner-section">
-          <h3>Top Match</h3>
-          <div className="winner-title">{winner.name}</div>
+          <div className="winner-badge">
+            <span className="winner-badge-dot"></span>
+            НАЙКРАЩИЙ ЗБІГ
+          </div>
+          
+          <div className="winner-title">{winnerName}</div>
+          
+          <div className="winner-score-row">
+            <div className="winner-score">{winner.score}%</div>
+            <div className="winner-score-label">відповідність профілю</div>
+          </div>
+          
+          <div className="winner-divider"></div>
+          
           <p className="winner-desc">{winner.desc}</p>
+
+          <div className="kpi-section">
+            <div className="kpi-label">СПЕЦІАЛЬНІСТЬ</div>
+            <div className="kpi-pill"><strong>{kpiInfo.specialty.split(':')[0]}:</strong>{kpiInfo.specialty.split(':')[1]}</div>
+            
+            <div className="kpi-label">КАФЕДРА</div>
+            <div className="kpi-dept-group">
+              {kpiInfo.depts.map((dept, i) => (
+                <div key={i} className="kpi-pill" style={{ marginBottom: i === kpiInfo.depts.length - 1 ? 0 : '0.5rem' }}>
+                  <strong>{dept.split(':')[0]}:</strong>{dept.split(':')[1]}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="jobs-list">
           {jobs.map((job, idx) => (
             <div key={idx} className="job-item">
-              <div className="job-name">{job.name}</div>
+              <div className="job-name">{job.name.replace('-', ' ')}</div>
               <div className="job-bar-container">
                 <div 
                   className="job-bar" 
