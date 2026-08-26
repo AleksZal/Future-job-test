@@ -51,9 +51,10 @@ export default function Login() {
           })
         });
         const data = await res.json();
-        if (data.success) {
+        if (data.id || data.success) {
           localStorage.setItem('studyingStatus', formData.status);
-          if (data.applicantId) localStorage.setItem('applicantId', data.applicantId);
+          if (data.id) localStorage.setItem('applicantId', data.id);
+          else if (data.applicantId) localStorage.setItem('applicantId', data.applicantId);
           setStep(2); // Proceed to Telegram code (or skip to test if verification is disabled)
         } else {
           setErrors({ form: data.reason || 'Registration failed' });
