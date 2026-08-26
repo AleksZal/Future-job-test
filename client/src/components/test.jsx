@@ -21,7 +21,7 @@ export default function Test() {
   const total = questions.length;
   const currentQ = questions[currentIdx];
 
-  const proceed = async () => {
+  const proceed = async (updatedScores = scores) => {
     if (currentIdx < total - 1) {
       setCurrentIdx(currentIdx + 1);
       setFocusedIdx(-1);
@@ -37,13 +37,13 @@ export default function Test() {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              activityScore: scores.activity,
-              socialScore: scores.social,
-              emotionalStabilityScore: scores.emotionalStability,
-              structureScore: scores.structure,
-              leadershipScore: scores.leadership,
-              mathScore: scores.math || 0,
-              physicsScore: scores.physics || 0
+              activityScore: updatedScores.activity,
+              socialScore: updatedScores.social,
+              emotionalStabilityScore: updatedScores.emotionalStability,
+              structureScore: updatedScores.structure,
+              leadershipScore: updatedScores.leadership,
+              mathScore: updatedScores.math || 0,
+              physicsScore: updatedScores.physics || 0
             })
           });
           if (!res.ok) throw new Error('Failed to submit results');
@@ -54,7 +54,7 @@ export default function Test() {
           return; // Early return to show error message briefly
         }
       }
-      localStorage.setItem('testScores', JSON.stringify(scores));
+      localStorage.setItem('testScores', JSON.stringify(updatedScores));
       navigate('/results');
     }
   };
@@ -62,16 +62,18 @@ export default function Test() {
   const handleAnswer = (idx) => {
     if (currentQ.isSubjectScore) return;
     const points = currentQ.answers[idx].points;
-    setScores(prev => ({ ...prev, [currentQ.trait]: prev[currentQ.trait] + points }));
-    proceed();
+    const newScores = { ...scores, [currentQ.trait]: scores[currentQ.trait] + points };
+    setScores(newScores);
+    proceed(newScores);
   };
 
   const handleSubjectSubmit = (e) => {
     e.preventDefault();
     const val = parseInt(subjectInput, 10);
     if (val >= 1 && val <= 12) {
-      setScores(prev => ({ ...prev, [currentQ.trait]: val }));
-      proceed();
+      const newScores = { ...scores, [currentQ.trait]: val };
+      setScores(newScores);
+      proceed(newScores);
     }
   };
 
