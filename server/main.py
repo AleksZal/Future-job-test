@@ -3,10 +3,10 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import applicants
-from .database import engine
-from . import models
-from .config import settings
+from routers import applicants
+from database import engine
+import models
+from config import settings
 
 # Create all tables (in a real app, use alembic)
 models.Base.metadata.create_all(bind=engine)

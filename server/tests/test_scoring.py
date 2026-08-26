@@ -1,5 +1,5 @@
 import pytest
-from server.services.scoring import calculate_job_scores, get_top_job, JOB_WEIGHTS
+from services.scoring import calculate_job_scores, get_top_job, JOB_WEIGHTS
 
 def test_calculate_job_scores():
     # Example traits: [activity, social, emotional_stability, structure, leadership]
