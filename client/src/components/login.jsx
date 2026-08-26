@@ -55,7 +55,7 @@ export default function Login() {
           localStorage.setItem('studyingStatus', formData.status);
           if (data.id) localStorage.setItem('applicantId', data.id);
           else if (data.applicantId) localStorage.setItem('applicantId', data.applicantId);
-          setStep(2); // Proceed to Telegram code (or skip to test if verification is disabled)
+          navigate('/test');
         } else {
           setErrors({ form: data.reason || 'Registration failed' });
         }
@@ -81,41 +81,32 @@ export default function Login() {
           <p>Please enter your details to start the test</p>
         </div>
         
-        {step === 1 ? (
-          <form onSubmit={handleProfileSubmit}>
-            <Input label="Full Name" placeholder="Ivan Ivanov" value={formData.fullName} onChange={(e) => handleChange('fullName', e.target.value)} error={errors.fullName} />
-            <PhoneInput label="Phone Number" value={formData.phone} onChange={(val) => handleChange('phone', val)} error={errors.phone} />
-            <Input label="Date of Birth" type="date" value={formData.dob} onChange={(e) => handleChange('dob', e.target.value)} error={errors.dob} />
-            <Input label="City" placeholder="Kyiv" value={formData.city} onChange={(e) => handleChange('city', e.target.value)} error={errors.city} />
-            <Input label="School" placeholder="Lyceum #1" value={formData.school} onChange={(e) => handleChange('school', e.target.value)} error={errors.school} />
-            
-            <div className="input-group">
-              <label className="input-label">Studying Status</label>
-              <select className={`input-field ${errors.status ? 'input-error' : ''}`} value={formData.status} onChange={(e) => handleChange('status', e.target.value)}>
-                <option value="">Select status...</option>
-                <option value="9th Grade">9th Grade</option>
-                <option value="10th Grade">10th Grade</option>
-                <option value="11th Grade">11th Grade</option>
-                <option value="Graduated">Graduated</option>
-              </select>
-              {errors.status && <span className="input-error-msg">{errors.status}</span>}
-            </div>
-            
-            <div className="form-actions">
-              {errors.form && <div className="input-error-msg" style={{marginBottom: '1rem', textAlign: 'center', width: '100%'}}>{errors.form}</div>}
-              <Button type="submit" variant="primary">Continue</Button>
-              <Button type="button" variant="secondary" onClick={() => navigate('/test')}>Skip (Dev)</Button>
-            </div>
-          </form>
-        ) : (
-          <form onSubmit={(e) => { e.preventDefault(); navigate('/test'); }}>
-            <Input label="Telegram Code" placeholder="12345" />
-            <div className="form-actions">
-              <Button type="submit" variant="primary">Verify & Login</Button>
-              <Button type="button" variant="secondary" onClick={() => setStep(1)}>Back</Button>
-            </div>
-          </form>
-        )}
+        {/* Form removed step 2, navigation happens directly on submit */}
+        <form onSubmit={handleProfileSubmit}>
+          <Input label="Full Name" placeholder="Ivan Ivanov" value={formData.fullName} onChange={(e) => handleChange('fullName', e.target.value)} error={errors.fullName} />
+          <PhoneInput label="Phone Number" value={formData.phone} onChange={(val) => handleChange('phone', val)} error={errors.phone} />
+          <Input label="Date of Birth" type="date" value={formData.dob} onChange={(e) => handleChange('dob', e.target.value)} error={errors.dob} />
+          <Input label="City" placeholder="Kyiv" value={formData.city} onChange={(e) => handleChange('city', e.target.value)} error={errors.city} />
+          <Input label="School" placeholder="Lyceum #1" value={formData.school} onChange={(e) => handleChange('school', e.target.value)} error={errors.school} />
+          
+          <div className="input-group">
+            <label className="input-label">Studying Status</label>
+            <select className={`input-field ${errors.status ? 'input-error' : ''}`} value={formData.status} onChange={(e) => handleChange('status', e.target.value)}>
+              <option value="">Select status...</option>
+              <option value="9th Grade">9th Grade</option>
+              <option value="10th Grade">10th Grade</option>
+              <option value="11th Grade">11th Grade</option>
+              <option value="Graduated">Graduated</option>
+            </select>
+            {errors.status && <span className="input-error-msg">{errors.status}</span>}
+          </div>
+          
+          <div className="form-actions">
+            {errors.form && <div className="input-error-msg" style={{marginBottom: '1rem', textAlign: 'center', width: '100%'}}>{errors.form}</div>}
+            <Button type="submit" variant="primary">Continue</Button>
+            <Button type="button" variant="secondary" onClick={() => navigate('/test')}>Skip (Dev)</Button>
+          </div>
+        </form>
         
         <div className="login-footer">
           Your data is secure and will only be used for the test results.
