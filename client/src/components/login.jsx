@@ -101,6 +101,7 @@ export default function Login() {
             </div>
             
             <div className="form-actions">
+              {errors.form && <div className="input-error-msg" style={{marginBottom: '1rem', textAlign: 'center', width: '100%'}}>{errors.form}</div>}
               <Button type="submit" variant="primary">Continue</Button>
               <Button type="button" variant="secondary" onClick={() => navigate('/test')}>Skip (Dev)</Button>
             </div>
