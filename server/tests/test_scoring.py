@@ -6,14 +6,16 @@ def test_calculate_job_scores():
     traits = [1.0, 1.0, 1.0, 1.0, 1.0]
     scores = calculate_job_scores(traits, JOB_WEIGHTS)
     
-    # Backend = 1 - 2 + 1 + 3 + 0 = 3
-    assert scores["Backend"] == 3.0
+    # Min raw score is 1.0 (Data-Science), Max raw score is 9.0 (Project-Management)
+    # Normalized = (raw - min) / (max - min)
+    # Backend raw = 3 -> (3 - 1) / 8 = 0.25
+    assert scores["Backend"] == 0.25
     
-    # QA = -1 + 0 + 1 + 4 - 1 = 3
-    assert scores["QA"] == 3.0
+    # QA raw = 3 -> 0.25
+    assert scores["QA"] == 0.25
     
-    # Project-Management = 1 + 3 + 2 + 0 + 3 = 9
-    assert scores["Project-Management"] == 9.0
+    # Project-Management raw = 9 -> 1.0
+    assert scores["Project-Management"] == 1.0
 
 def test_get_top_job():
     scores = {
