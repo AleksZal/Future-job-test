@@ -136,9 +136,6 @@ export default function Test() {
           </div>
         )}
         
-        <div style={{ textAlign: 'right' }}>
-          <Button variant="secondary" onClick={() => navigate('/results')}>Skip to Results (Dev)</Button>
-        </div>
       </Card>
     </div>
   );
