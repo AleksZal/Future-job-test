@@ -7,7 +7,7 @@ import '../styles/results.css';
 const jobDescriptions = {
   Frontend: 'Створює користувацькі інтерфейси та взаємодію з ними.',
   Backend: 'Розробляє серверну логіку, бази даних та API.',
-  QA: 'Ви уважні до деталей і методичні. QA — це роль, де ваша точність стає ключовою перевагою команди.',
+  'Quality-Assurance': 'Ви уважні до деталей і методичні. QA — це роль, де ваша точність стає ключовою перевагою команди.',
   DevOps: 'Автоматизує процеси розгортання та керує інфраструктурою.',
   'Data-Science': 'Аналізує великі дані та будує модели штучного інтелекту.',
   'Data-Engineering': 'Створює надійні конвеєри обробки великих даних.',
@@ -16,7 +16,7 @@ const jobDescriptions = {
 };
 
 const kpiMapping = {
-  'QA': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
+  'Quality-Assurance': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
   'Frontend': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
   'Backend': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування", "ШІ: Кафедра штучного інтелекту"] },
   'DevOps': { specialty: "122: Комп'ютерні науки, системне проєктування та штучний інтелект", depts: ["СП: Кафедра системного проектування"] },
@@ -88,8 +88,8 @@ export default function Results() {
   if (jobs.length === 0) return <div>Loading...</div>;
 
   const winner = jobs[0];
-  const winnerName = winner.name.replace('-', ' ');
-  const kpiInfo = kpiMapping[winner.name] || kpiMapping['QA'];
+  const winnerName = winner.name.replace(/-/g, ' ');
+  const kpiInfo = kpiMapping[winner.name] || kpiMapping['Quality-Assurance'];
 
   return (
     <div className="results-container">
@@ -131,7 +131,7 @@ export default function Results() {
         <div className="jobs-list">
           {jobs.map((job, idx) => (
             <div key={idx} className="job-item">
-              <div className="job-name">{job.name.replace('-', ' ')}</div>
+              <div className="job-name">{job.name.replace(/-/g, ' ')}</div>
               <div className="job-bar-container">
                 <div 
                   className="job-bar" 
