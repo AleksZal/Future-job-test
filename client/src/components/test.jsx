@@ -69,11 +69,18 @@ export default function Test() {
 
   const handleSubjectSubmit = (e) => {
     e.preventDefault();
-    const val = parseInt(subjectInput, 10);
-    if (val >= 1 && val <= 12) {
+    let val = 0;
+    if (subjectInput.trim() !== '') {
+      val = parseInt(subjectInput, 10);
+    }
+    
+    if (val === 0 || (val >= 1 && val <= 12) || (val >= 100 && val <= 200)) {
+      setErrorMsg(null);
       const newScores = { ...scores, [currentQ.trait]: val };
       setScores(newScores);
       proceed(newScores);
+    } else {
+      setErrorMsg('Будь ласка, введіть число від 1 до 12, від 100 до 200, або 0.');
     }
   };
 
@@ -113,12 +120,12 @@ export default function Test() {
         {currentQ.isSubjectScore ? (
           <form onSubmit={handleSubjectSubmit} style={{ maxWidth: '300px', margin: '0 auto', marginBottom: '2rem' }}>
             <Input 
-              type="number" min="1" max="12" 
+              type="number" min="0" max="200" 
               value={subjectInput} 
               onChange={e => setSubjectInput(e.target.value)} 
-              placeholder="1-12"
+              placeholder="0, 1-12, або 100-200"
             />
-            <Button type="submit" variant="primary" style={{ width: '100%' }}>Submit</Button>
+            <Button type="submit" variant="primary" style={{ width: '100%', marginTop: '1rem' }}>Submit</Button>
           </form>
         ) : (
           <div className="answers-container">
