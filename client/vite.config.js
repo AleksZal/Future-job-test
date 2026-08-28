@@ -7,12 +7,12 @@ export default defineConfig({
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 5173,
     host: true,
-    allowedHosts: ['frontend-production-5cfa.up.railway.app']
+    allowedHosts: true
   },
   preview: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 5173,
     host: true,
-    allowedHosts: ['frontend-production-5cfa.up.railway.app']
+    allowedHosts: true
   },
   test: {
     environment: 'jsdom',
