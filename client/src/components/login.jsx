@@ -51,10 +51,9 @@ export default function Login() {
           })
         });
         const data = await res.json();
-        if (data.id || data.success) {
+        if (data.token) {
           localStorage.setItem('studyingStatus', formData.status);
-          if (data.id) localStorage.setItem('applicantId', data.id);
-          else if (data.applicantId) localStorage.setItem('applicantId', data.applicantId);
+          localStorage.setItem('token', data.token);
           navigate('/test');
         } else {
           setErrors({ form: data.reason || 'Registration failed' });

@@ -12,25 +12,19 @@ class ApplicantBase(BaseModel):
 class ApplicantCreate(ApplicantBase):
     pass
 
-class ApplicantResponse(ApplicantBase):
-    id: int
-    has_completed_test: bool
-    is_phone_number_valid: bool
-    
-    class Config:
-        populate_by_name = True
-        from_attributes = True
+class ApplicantResponse(BaseModel):
+    token: str
 
 class NonGraduateScoreUpdate(BaseModel):
-    activity_score: float = Field(alias="activityScore")
-    social_score: float = Field(alias="socialScore")
-    emotional_stability_score: float = Field(alias="emotionalStabilityScore")
-    structure_score: float = Field(alias="structureScore")
-    leadership_score: float = Field(alias="leadershipScore")
+    activity_score: float = Field(alias="activityScore", ge=-3.0, le=3.0)
+    social_score: float = Field(alias="socialScore", ge=-3.0, le=3.0)
+    emotional_stability_score: float = Field(alias="emotionalStabilityScore", ge=-3.0, le=3.0)
+    structure_score: float = Field(alias="structureScore", ge=-3.0, le=3.0)
+    leadership_score: float = Field(alias="leadershipScore", ge=-3.0, le=3.0)
 
 class GraduateScoreUpdate(NonGraduateScoreUpdate):
-    math_score: int = Field(alias="mathScore")
-    physics_score: int = Field(alias="physicsScore")
+    math_score: int = Field(alias="mathScore", ge=0, le=200)
+    physics_score: int = Field(alias="physicsScore", ge=0, le=200)
 
 class JobScore(BaseModel):
     activityScore: float

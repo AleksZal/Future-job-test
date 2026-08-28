@@ -2,26 +2,23 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import models, schemas
 from database import get_db
+from auth import create_access_token, get_current_applicant
 
 router = APIRouter(prefix="/api/applicant", tags=["Applicant"])
-
-def get_applicant_or_404(applicant_id: int, db: Session = Depends(get_db)):
-    applicant = db.query(models.Applicant).filter(models.Applicant.id == applicant_id).first()
-    if not applicant:
-        raise HTTPException(status_code=404, detail="Applicant not found")
-    return applicant
 
 @router.post(
     "/register", 
     response_model=schemas.ApplicantResponse,
     summary="Register a new applicant",
-    response_description="Returns the created or existing applicant data"
+    response_description="Returns the created or existing applicant data with JWT token"
 )
 def register_applicant(applicant: schemas.ApplicantCreate, db: Session = Depends(get_db)):
     db_applicant = db.query(models.Applicant).filter(models.Applicant.phone_number == applicant.phone_number).first()
+    
     if db_applicant:
-        # Update existing applicant details on re-registration if needed, or just return existing
-        return db_applicant
+        # User exists, just generate a new token
+        access_token = create_access_token(data={"sub": db_applicant.id})
+        return schemas.ApplicantResponse(token=access_token)
     
     new_applicant = models.Applicant(
         full_name=applicant.full_name,
@@ -35,14 +32,16 @@ def register_applicant(applicant: schemas.ApplicantCreate, db: Session = Depends
     db.add(new_applicant)
     db.commit()
     db.refresh(new_applicant)
-    return new_applicant
+    
+    access_token = create_access_token(data={"sub": new_applicant.id})
+    return schemas.ApplicantResponse(token=access_token)
 
 @router.patch(
-    "/non-graduate/test-results/{applicant_id}",
+    "/non-graduate/test-results",
     summary="Update test results for non-graduates",
     response_description="Returns success status"
 )
-def update_non_graduate_scores(scores: schemas.NonGraduateScoreUpdate, applicant: models.Applicant = Depends(get_applicant_or_404), db: Session = Depends(get_db)):
+def update_non_graduate_scores(scores: schemas.NonGraduateScoreUpdate, applicant: models.Applicant = Depends(get_current_applicant), db: Session = Depends(get_db)):
     applicant.activity_score = scores.activity_score
     applicant.social_score = scores.social_score
     applicant.emotional_stability_score = scores.emotional_stability_score
@@ -53,11 +52,11 @@ def update_non_graduate_scores(scores: schemas.NonGraduateScoreUpdate, applicant
     return {"success": True}
 
 @router.patch(
-    "/graduate/test-results/{applicant_id}",
+    "/graduate/test-results",
     summary="Update test results for graduates (includes subjects)",
     response_description="Returns success status"
 )
-def update_graduate_scores(scores: schemas.GraduateScoreUpdate, applicant: models.Applicant = Depends(get_applicant_or_404), db: Session = Depends(get_db)):
+def update_graduate_scores(scores: schemas.GraduateScoreUpdate, applicant: models.Applicant = Depends(get_current_applicant), db: Session = Depends(get_db)):
     applicant.activity_score = scores.activity_score
     applicant.social_score = scores.social_score
     applicant.emotional_stability_score = scores.emotional_stability_score
@@ -70,12 +69,12 @@ def update_graduate_scores(scores: schemas.GraduateScoreUpdate, applicant: model
     return {"success": True}
 
 @router.get(
-    "/test-results/{applicant_id}", 
+    "/test-results", 
     response_model=schemas.TestResultsResponse,
     summary="Get calculated job test results",
     response_description="Returns traits for score calculation"
 )
-def get_test_results(applicant: models.Applicant = Depends(get_applicant_or_404)):
+def get_test_results(applicant: models.Applicant = Depends(get_current_applicant)):
     if not applicant.has_completed_test:
         return {"success": False, "score": {
             "activityScore": 0, "socialScore": 0,

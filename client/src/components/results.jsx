@@ -33,12 +33,16 @@ export default function Results() {
 
   useEffect(() => {
     const fetchResults = async () => {
-      const applicantId = localStorage.getItem('applicantId');
+      const token = localStorage.getItem('token');
       let scoreData = JSON.parse(localStorage.getItem('testScores') || '{}');
 
-      if (applicantId) {
+      if (token) {
         try {
-          const res = await fetch(`${API_BASE}/api/applicant/test-results/${applicantId}`);
+          const res = await fetch(`${API_BASE}/api/applicant/test-results`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
           if (!res.ok) throw new Error('Network response was not ok');
           const data = await res.json();
           if (data.success && data.score) {

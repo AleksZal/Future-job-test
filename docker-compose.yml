@@ -5,7 +5,7 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: local_dev_password
       POSTGRES_DB: future_job_db
     ports:
       - "5432:5432"
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./server:/app
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/future_job_db
+      - DATABASE_URL=postgresql://postgres:local_dev_password@db:5432/future_job_db
     depends_on:
       - db
 

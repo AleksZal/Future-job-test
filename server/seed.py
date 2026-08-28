@@ -1,5 +1,5 @@
-from server.database import SessionLocal, engine
-from server import models
+from database import SessionLocal, engine
+import models
 
 def seed_data():
     models.Base.metadata.create_all(bind=engine)

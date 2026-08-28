@@ -5,8 +5,8 @@ import Results from "./components/results";
 
 // A wrapper for protected routes
 function ProtectedRoute({ children }) {
-  const applicantId = localStorage.getItem('applicantId');
-  if (!applicantId) {
+  const token = localStorage.getItem('token');
+  if (!token) {
     // If not registered/logged in, redirect to home page
     return <Navigate to="/" replace />;
   }

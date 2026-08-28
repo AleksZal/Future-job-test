@@ -28,14 +28,17 @@ export default function Test() {
       setSubjectInput('');
       setErrorMsg(null);
     } else {
-      const applicantId = localStorage.getItem('applicantId');
-      if (applicantId) {
-        const endpoint = isGraduate ? `/api/applicant/graduate/test-results/${applicantId}` : `/api/applicant/non-graduate/test-results/${applicantId}`;
+      const token = localStorage.getItem('token');
+      if (token) {
+        const endpoint = isGraduate ? `/api/applicant/graduate/test-results` : `/api/applicant/non-graduate/test-results`;
         try {
           const { API_BASE } = await import('../config');
           const res = await fetch(`${API_BASE}${endpoint}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({
               activityScore: updatedScores.activity,
               socialScore: updatedScores.social,
