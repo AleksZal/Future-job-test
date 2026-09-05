@@ -1,59 +1,59 @@
-# Future Job Profiler (CES 2027 Entry)
+# Future Job Profiler (Заявка на CES 2027)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-18-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.110-green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
 
-Future Job Profiler is an advanced psychometric evaluation platform designed to help candidates discover their optimal career paths in the modern tech industry. Using a scientifically backed weighted algorithm, the system evaluates core psychological traits (Activity, Social aptitude, Emotional Stability, Structure, Leadership) alongside STEM proficiency to accurately predict the best IT specialization for the user.
+Future Job Profiler — це передова платформа психометричного оцінювання, створена для того, щоб допомогти кандидатам знайти свій оптимальний кар'єрний шлях у сучасній ІТ-індустрії. Використовуючи науково обґрунтований алгоритм зважених коефіцієнтів, система оцінює ключові психологічні риси (Активність, Соціальність, Емоційну стабільність, Структурованість, Лідерство) разом із рівнем знань STEM (математика/фізика) для максимально точного прогнозування найкращої ІТ-спеціалізації для користувача.
 
-## ✨ Key Features
+## ✨ Ключові можливості
 
-- **Algorithmic Profiling**: A multi-dimensional weighted scoring system that matches candidates to 10+ modern tech roles (from Data Science to Quality Assurance).
-- **Secure Authentication**: Passwordless, JWT-based cryptographic sessions ensuring total privacy and data integrity.
-- **Robust Validation**: Server-side Pydantic models with strict data boundaries prevent score manipulation and API abuse.
-- **Modern UI/UX**: Built with React and Vite, featuring smooth micro-animations, glassmorphism elements, and fully responsive design.
-- **Scalable Architecture**: Dockerized frontend and backend designed for seamless cloud deployment (currently hosted on Railway).
+- **Алгоритмічне профілювання**: Багатовимірна система балів, яка підбирає кандидатам одну з 10+ сучасних ІТ-професій (від Data Science до Quality Assurance).
+- **Безпечна автентифікація**: Безпарольні криптографічні сесії на базі JWT, що гарантують повну конфіденційність та цілісність даних.
+- **Надійна валідація**: Серверні моделі Pydantic із жорсткими межами даних запобігають маніпуляціям з оцінками та зловживанням API.
+- **Сучасний UI/UX**: Інтерфейс створений на React та Vite, має плавні мікроанімації, елементи гласморфізму (glassmorphism) та повністю адаптивний дизайн.
+- **Масштабована архітектура**: Фронтенд та бекенд упаковані в Docker і розроблені для безшовного розгортання в хмарі (наразі працює на Railway).
 
-## 🏗️ Architecture & Tech Stack
+## 🏗️ Архітектура та Технологічний стек
 
-### Frontend (Client)
-- **Framework**: React 18 (Vite)
-- **Routing**: React Router DOM (Protected Routes)
-- **Styling**: Vanilla CSS with modern CSS Variables (Design System)
+### Фронтенд (Клієнт)
+- **Фреймворк**: React 18 (Vite)
+- **Роутинг**: React Router DOM (Захищені маршрути)
+- **Стилізація**: Чистий CSS із сучасними CSS-змінними (Дизайн-система)
 
-### Backend (Server)
-- **Framework**: FastAPI (Python)
-- **Database**: PostgreSQL with SQLAlchemy ORM
-- **Security**: PyJWT for stateless authentication, strict CORS policies, and environment-based secret management.
+### Бекенд (Сервер)
+- **Фреймворк**: FastAPI (Python)
+- **База даних**: PostgreSQL з ORM SQLAlchemy
+- **Безпека**: PyJWT для автентифікації без збереження стану (stateless), сувора політика CORS та управління секретами через змінні середовища.
 
-## 🚀 Getting Started (Local Development)
+## 🚀 Запуск (Локальна розробка)
 
-### Prerequisites
-- Docker and Docker Compose
+### Вимоги
+- Docker та Docker Compose
 - Node.js (v18+)
 
-### Running the Stack
-1. Clone the repository.
-2. Spin up the PostgreSQL database and backend using Docker:
+### Запуск стеку
+1. Склонуйте репозиторій.
+2. Запустіть базу даних PostgreSQL та бекенд за допомогою Docker:
    ```bash
    docker-compose up -d
    ```
-3. Install frontend dependencies:
+3. Встановіть залежності фронтенду:
    ```bash
    cd client
    npm install
    ```
-4. Start the frontend development server:
+4. Запустіть локальний сервер розробки фронтенду:
    ```bash
    npm run dev
    ```
 
-## 🛡️ Security Posture
-This platform implements enterprise-grade security standards:
-- **No PII Leakage**: Registration endpoints exchange JWT tokens without exposing user data.
-- **IDOR Protection**: Test results and user profiles are tied to the cryptographic signature of the JWT, preventing ID iteration.
-- **Zero-Trust Input**: All psychometric scores and subject grades are validated against strict numerical bounds before reaching the database.
+## 🛡️ Безпека
+Ця платформа впроваджує стандарти безпеки корпоративного рівня:
+- **Відсутність витоку PII**: Ендпоінти реєстрації обмінюються лише JWT-токенами, не розкриваючи персональні дані користувачів.
+- **Захист від IDOR**: Результати тестів та профілі користувачів прив'язані до криптографічного підпису JWT, що унеможливлює перебір ID.
+- **Zero-Trust (Нульова довіра до вводу)**: Усі психометричні оцінки та шкільні бали проходять жорстку валідацію на відповідність числовим межам перед записом у базу даних.
 
 ---
-*Developed for the CES 2027 Innovation Showcase.*
+*Розроблено для інноваційної виставки CES 2027.*
