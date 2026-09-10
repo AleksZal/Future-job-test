@@ -188,7 +188,193 @@ export const questionsAndAnswers = {
         { points: -0.5, text: "Ближче до Б" },
         { points: -1, text: "Точно Б" }
       ]
+    },
+    // --- Додаткові питання (Activity) ---
+    {
+      trait: "activity",
+      questionTextOne: "Я люблю швидко переключатися між різними завданнями.",
+      questionTextTwo: "Мені потрібен час, щоб налаштуватися на нове завдання.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "activity",
+      questionTextOne: "Мене мотивують жорсткі дедлайни.",
+      questionTextTwo: "Я краще працюю без обмежень у часі.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "activity",
+      questionTextOne: "Я часто беру на себе ініціативу в нових проектах.",
+      questionTextTwo: "Я приєднуюсь до проектів, коли все вже організовано.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    // --- Додаткові питання (Social) ---
+    {
+      trait: "social",
+      questionTextOne: "Я отримую задоволення від публічних виступів.",
+      questionTextTwo: "Я уникаю виступів перед великою аудиторією.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "social",
+      questionTextOne: "Мені подобається розширювати мережу контактів.",
+      questionTextTwo: "Я не бачу сенсу у формальному нетворкінгу.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "social",
+      questionTextOne: "Я легко висловлюю свою думку в групі незнайомців.",
+      questionTextTwo: "Я рідко ділюся думками з малознайомими людьми.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    // --- Додаткові питання (Emotional Stability) ---
+    {
+      trait: "emotionalStability",
+      questionTextOne: "Критика стимулює мене працювати краще.",
+      questionTextTwo: "Критика часто демотивує мене.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "emotionalStability",
+      questionTextOne: "Я швидко відновлююся після конфліктів.",
+      questionTextTwo: "Конфлікти надовго вибивають мене з колії.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "emotionalStability",
+      questionTextOne: "Я легко адаптуюсь до несподіваних змін.",
+      questionTextTwo: "Раптові зміни викликають у мене стрес.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    // --- Додаткові питання (Structure) ---
+    {
+      trait: "structure",
+      questionTextOne: "Я завжди тримаю своє робоче місце в ідеальному порядку.",
+      questionTextTwo: "Мене влаштовує творчий безлад.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "structure",
+      questionTextOne: "Я надаю перевагу задачам з чітким алгоритмом дій.",
+      questionTextTwo: "Я люблю завдання, де алгоритм потрібно винаходити самому.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "structure",
+      questionTextOne: "Я завжди завершую одну справу перед початком іншої.",
+      questionTextTwo: "Я часто перемикаюсь між незавершеними справами.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    // --- Додаткові питання (Leadership) ---
+    {
+      trait: "leadership",
+      questionTextOne: "Я готовий брати на себе відповідальність за чужі помилки.",
+      questionTextTwo: "Кожен має сам відповідати за свої дії.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "leadership",
+      questionTextOne: "Мені легко переконувати інших у своїй правоті.",
+      questionTextTwo: "Я віддаю перевагу компромісам замість суперечок.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
+    },
+    {
+      trait: "leadership",
+      questionTextOne: "Я бачу себе керівником великої команди в майбутньому.",
+      questionTextTwo: "Я бачу себе цінним спеціалістом без управлінських функцій.",
+      answers: [
+        { points: 1, text: "Точно А" },
+        { points: 0.5, text: "Ближче до А" },
+        { points: 0, text: "Не знаю" },
+        { points: -0.5, text: "Ближче до Б" },
+        { points: -1, text: "Точно Б" }
+      ]
     }
+
   ],
   graduate: [
     {
