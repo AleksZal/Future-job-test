@@ -182,8 +182,13 @@
 }
 
 @media (max-width: 768px) {
+  .winner-section {
+    padding: var(--space-6);
+  }
   .winner-title {
-    font-size: 2.25rem;
+    font-size: 2rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   .winner-score {
     font-size: 2.5rem;
