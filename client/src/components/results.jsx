@@ -110,7 +110,6 @@ export default function Results() {
           
           <div className="winner-score-row">
             <div className="winner-score">{winner.score}%</div>
-            <div className="winner-score-label">відповідність профілю</div>
           </div>
           
           <div className="winner-divider"></div>
