@@ -13,7 +13,7 @@ Future Job Profiler is a psychometric assessment platform that helps people find
 - **Secure authentication**: passwordless, cryptographically signed JWT sessions that protect user data.
 - **Strict validation**: server-side Pydantic models with hard value limits prevent score manipulation and API abuse.
 - **Modern UI/UX**: built with React and Vite, with smooth micro-animations, glassmorphism elements and a fully responsive layout.
-- **Scalable architecture**: the frontend and backend are containerised with Docker and designed for cloud deployment (currently running on Railway).
+- **Containerised setup**: the frontend and backend are containerised with Docker and can be run locally with `docker-compose up`. The app was previously deployed on Railway.
 
 ## 🏗️ Architecture and tech stack
 
