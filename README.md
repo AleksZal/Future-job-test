@@ -5,26 +5,24 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.110-green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
 
-Future Job Profiler — це передова платформа психометричного оцінювання, створена для того, щоб допомогти кандидатам знайти свій оптимальний кар'єрний шлях у сучасній ІТ-індустрії. Використовуючи науково обґрунтований алгоритм зважених коефіцієнтів, система оцінює ключові психологічні риси (Активність, Соціальність, Емоційну стабільність, Структурованість, Лідерство) разом із рівнем знань STEM (математика/фізика) для максимально точного прогнозування найкращої ІТ-спеціалізації для користувача.
+Future Job Profiler is a psychometric assessment platform that helps people find a suitable career path in the IT industry. Using a weighted-coefficient scoring algorithm, the system evaluates key personality traits (Activity, Sociability, Emotional Stability, Structure, Leadership) together with the user's STEM knowledge (math/physics) to recommend the IT specialisation that fits them best.
 
-## ✨ Ключові можливості
+## ✨ Key features
 
-- **Алгоритмічне профілювання**: Багатовимірна система балів, яка підбирає кандидатам одну з 10+ сучасних ІТ-професій (від Data Science до Quality Assurance).
-- **Безпечна автентифікація**: Безпарольні криптографічні сесії на базі JWT, що гарантують повну конфіденційність та цілісність даних.
-- **Надійна валідація**: Серверні моделі Pydantic із жорсткими межами даних запобігають маніпуляціям з оцінками та зловживанням API.
-- **Сучасний UI/UX**: Інтерфейс створений на React та Vite, має плавні мікроанімації, елементи гласморфізму (glassmorphism) та повністю адаптивний дизайн.
-- **Масштабована архітектура**: Фронтенд та бекенд упаковані в Docker і розроблені для безшовного розгортання в хмарі (наразі працює на Railway).
+- **Algorithmic profiling**: a multi-dimensional scoring system that matches users with one of 10+ modern IT professions (from Data Science to Quality Assurance).
+- **Secure authentication**: passwordless, cryptographically signed JWT sessions that protect user data.
+- **Strict validation**: server-side Pydantic models with hard value limits prevent score manipulation and API abuse.
+- **Modern UI/UX**: built with React and Vite, with smooth micro-animations, glassmorphism elements and a fully responsive layout.
+- **Scalable architecture**: the frontend and backend are containerised with Docker and designed for cloud deployment (currently running on Railway).
 
-## 🏗️ Архітектура та Технологічний стек
+## 🏗️ Architecture and tech stack
 
-### Фронтенд (Клієнт)
-- **Фреймворк**: React 18 (Vite)
-- **Роутинг**: React Router DOM (Захищені маршрути)
-- **Стилізація**: Чистий CSS із сучасними CSS-змінними (Дизайн-система)
+### Frontend (client)
+- **Framework**: React 18 (Vite)
+- **Routing**: React Router DOM (protected routes)
+- **Styling**: plain CSS with CSS custom properties (design system)
 
-### Бекенд (Сервер)
-- **Фреймворк**: FastAPI (Python)
-- **База даних**: PostgreSQL з ORM SQLAlchemy
-- **Безпека**: PyJWT для автентифікації без збереження стану (stateless), сувора політика CORS та управління секретами через змінні середовища.
-
-
+### Backend (server)
+- **Framework**: FastAPI (Python)
+- **Database**: PostgreSQL with SQLAlchemy ORM
+- **Security**: PyJWT for stateless authentication, a strict CORS policy and secrets managed through environment variables.
